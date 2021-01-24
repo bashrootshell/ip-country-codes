@@ -27,11 +27,11 @@ urllib3.disable_warnings()
 h = urllib3.PoolManager(
     cert_reqs=c_reqs)
 
-RIRs = ["https://ftp.lacnic.net/pub/stats/ripencc/delegated-ripencc-latest",
+RIRs = ("https://ftp.lacnic.net/pub/stats/ripencc/delegated-ripencc-latest",
         "https://ftp.lacnic.net/pub/stats/apnic/delegated-apnic-latest",
         "https://ftp.lacnic.net/pub/stats/arin/delegated-arin-extended-latest",
         "https://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest",
-        "https://ftp.lacnic.net/pub/stats/afrinic/delegated-afrinic-latest"]
+        "https://ftp.lacnic.net/pub/stats/afrinic/delegated-afrinic-latest")
 
 
 if len(argv) > 1:
