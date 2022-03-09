@@ -74,7 +74,7 @@ elif CC in CC_LACNIC:
 elif CC in CC_AFRINIC:
     url = AFRINIC
 else:
-    exit(f"The country code {CC} in invalid.")
+    exit(f'The country code {CC} in invalid.')
 
 for prefix in httpreq.request('GET', url).data.decode('utf-8').splitlines():
     regex = search(str(argv[1]) + '.*ipv4', prefix)
