@@ -3,8 +3,8 @@
 from sys import argv
 from re import search
 from math import log2
-import urllib3
-import ssl
+from urllib3 import disable_warnings, PoolManager
+from ssl import CERT_NONE
 
 """
     Programmed with urllib3.
@@ -21,11 +21,11 @@ import ssl
 """
 
 """  Bypass SSL/TLS checks  """
-c_reqs = ssl.CERT_NONE
-urllib3.disable_warnings()
 
-h = urllib3.PoolManager(
-    cert_reqs=c_reqs)
+disable_warnings()
+
+httpreq = PoolManager(
+    cert_reqs=CERT_NONE)
 
 CC = argv[1] if len(argv) == 2 else exit("Provide a country code \
 eg: US or CA")
@@ -71,10 +71,12 @@ elif CC in CC_ARIN:
     url = ARIN
 elif CC in CC_LACNIC:
     url = LACNIC
-else:
+elif CC in CC_AFRINIC:
     url = AFRINIC
+else:
+    exit(f"The country code {CC} in invalid.")
 
-for prefix in h.request('GET', url).data.decode('utf-8').splitlines():
+for prefix in httpreq.request('GET', url).data.decode('utf-8').splitlines():
     regex = search(str(argv[1]) + '.*ipv4', prefix)
     if regex:  # searches for cc and ipv4 strings
         netaddr = prefix.split("|")[3]  # net addr
