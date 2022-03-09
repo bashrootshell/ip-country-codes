@@ -9,9 +9,7 @@ from ssl import CERT_NONE
 """
     Programmed with urllib3.
     Global RIR IPv4 CIDR prefix extractor, by country.
-    It now searches for a particular CC in all RIRs:
-    RIPE NCC, APNIC, ARIN, LACNIC and AFRINIC
-
+   
     Usage: ./program.py countrycode (optional: file)
     If a file isn't an argument, it prints prefixes to stdout.
 
