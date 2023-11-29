@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from sys import argv
 from re import search
@@ -15,17 +15,15 @@ from ssl import CERT_NONE
 
     PEP8 compliant
     "Explicit is better than implicit."
-    — The Zen of Python
+    "If the implementation is easy to explain, it may be a good idea."
+        — The Zen of Python
 """
-
-"""  Bypass SSL/TLS checks  """
 
 disable_warnings()
 
-httpreq = PoolManager(
-    cert_reqs=CERT_NONE)
+httpreq = PoolManager(cert_reqs=CERT_NONE)
 
-CC = argv[1] if len(argv) == 2 else exit("Provide a country code \
+CC = argv[1] if len(argv) >= 2 else exit("Provide a country code \
 eg: US or CA")
 
 RIPENCC = ("https://ftp.lacnic.net/pub/stats/ripencc/delegated-ripencc-latest")
@@ -72,7 +70,7 @@ elif CC in CC_LACNIC:
 elif CC in CC_AFRINIC:
     url = AFRINIC
 else:
-    exit(f'The country code {CC} in invalid.')
+    exit(f'The country code {CC} is invalid.')
 
 for prefix in httpreq.request('GET', url).data.decode('utf-8').splitlines():
     regex = search(str(argv[1]) + '.*ipv4', prefix)
@@ -84,4 +82,4 @@ for prefix in httpreq.request('GET', url).data.decode('utf-8').splitlines():
             print(f'{netaddr}/{cidrmask}')  # prints to stdout
         elif len(argv) == 3:
             with open(f'{argv[2]}.txt', 'a') as file:
-                print(f'{netaddr}/{cidrmask}', file=file)
+                print(f'{netaddr}/{cidrmask}', file=file) # writes to file
