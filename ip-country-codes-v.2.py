@@ -72,6 +72,13 @@ elif CC in CC_AFRINIC:
 else:
     exit(f'The country code {CC} is invalid.')
 
+if argv[1:]:
+    try:
+        with open(f'{argv[2]}.txt', 'w'): # truncate file if it exists
+            pass
+    except:
+        pass
+    
 for prefix in httpreq.request('GET', url).data.decode('utf-8').splitlines():
     regex = search(str(argv[1]) + '.*ipv4', prefix)
     if regex:  # searches for cc and ipv4 strings
